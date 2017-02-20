@@ -1,0 +1,22 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Load The Cached Routes
+|--------------------------------------------------------------------------
+|
+| Here we will decode and unserialize the RouteCollection instance that
+| holds all of the route information for an application. This allows
+| us to instantaneously load the entire route map into the router.
+|
+*/
+apcu_delete('routerObj');
+
+$routerObj = unserialize(base64_decode('{{routes}}'));
+apcu_add('routerObj', $routerObj);
+
+app('router')->setRoutes(
+	$routerObj
+);
+
+
